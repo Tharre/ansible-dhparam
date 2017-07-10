@@ -1,6 +1,8 @@
 ---
-
-- include: install.yml
+- name: Ensure OpenSSL is installed
+  package:
+    name: openssl
+    state: present
 
 - name: Find path to the openssl binary
   command: which openssl
@@ -22,4 +24,10 @@
   args:
     creates: "{{ dhparam_file }}"
 
+- name: Check if crontab exists
+  stat:
+    path: /etc/crontab
+  register: crontab
+
 - include: cron.yml
+  when: crontab.stat.exists == True

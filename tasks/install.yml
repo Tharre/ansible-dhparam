@@ -1,5 +1,0 @@
----
-- name: Ensure OpenSSL is installed
-  package:
-    name: openssl
-    state: present
