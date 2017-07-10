@@ -1,4 +1,13 @@
 ---
+- name: Find path to the openssl binary
+  command: which openssl
+  changed_when: false
+  register: which_openssl_output
+
+- name: Register fact containing path to openssl binary
+  set_fact:
+    dhparam_openssl_binary: "{{which_openssl_output.stdout_lines[0]}}"
+  no_log: true
 
 - set_fact:
     _cronjob_name: "dhparam_{{ dhparam_file | hash('sha1') }}"
